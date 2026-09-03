@@ -11,10 +11,13 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/pharma-robot
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  DOCKER_BUILD_RECORD_UPLOAD: false
+  DOCKER_BUILD_SUMMARY: false
 
 permissions:
   contents: read
   packages: write
+  actions: write
 
 jobs:
   build:
@@ -96,9 +99,6 @@ jobs:
         run: |
           set +e
           docker compose --profile "${{ matrix.group }}" up --no-color
-          robot_exit_code=$?
-          echo "## ${{ matrix.label }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "Docker Compose exit code: $robot_exit_code" >> "$GITHUB_STEP_SUMMARY"
           exit 0
       - name: Upload Robot reports
         if: always()
@@ -145,12 +145,39 @@ jobs:
           if [ -d allure-report ]; then
             python -m pip install allure-combine
             allure-combine allure-report --dest allure-report
+            mkdir -p allure-single
+            if [ -f allure-report/complete.html ]; then
+              cp allure-report/complete.html allure-single/index.html
+            elif [ -f allure-report/index.html ]; then
+              cp allure-report/index.html allure-single/index.html
+            fi
           fi
       - name: Upload merged Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: allure-report/
+          path: allure-single/index.html
           if-no-files-found: warn
           retention-days: 30
+      - name: Delete temporary Robot artifacts
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const run_id = context.runId;
+            const artifacts = await github.paginate(
+              github.rest.actions.listWorkflowRunArtifacts,
+              {owner, repo, run_id, per_page: 100}
+            );
+
+            for (const artifact of artifacts) {
+              if (artifact.name.startsWith('robot-') || artifact.name.endsWith('.dockerbuild')) {
+                await github.rest.actions.deleteArtifact({
+                  owner,
+                  repo,
+                  artifact_id: artifact.id
+                });
+              }
+            }
