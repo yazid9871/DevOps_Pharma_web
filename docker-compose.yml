@@ -18,6 +18,8 @@ services:
 
   admin-ventes:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["admin-heavy-sales"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Ventes
@@ -26,6 +28,8 @@ services:
 
   admin-achats:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["admin-heavy-purchases"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Achats
@@ -116,6 +120,8 @@ services:
 
   user-ventes:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["user-heavy-sales"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Ventes
@@ -124,6 +130,8 @@ services:
 
   user-achats:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["user-heavy-purchases"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Achats
