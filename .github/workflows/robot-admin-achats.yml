@@ -9,8 +9,37 @@ on:
 
 jobs:
   admin-achats:
-    name: ADMIN_ACCOUNT Achats
+    name: ADMIN_ACCOUNT ${{ matrix.module }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - module: Achats
+            slug: achats
+          - module: Assistant_Marketplace
+            slug: assistant-marketplace
+          - module: Clients
+            slug: clients
+          - module: Confrères
+            slug: confreres
+          - module: Fournisseurs
+            slug: fournisseurs
+          - module: Marketing
+            slug: marketing
+          - module: Organismes
+            slug: organismes
+          - module: Paramètres
+            slug: parametres
+          - module: Produits
+            slug: produits
+          - module: Rapports
+            slug: rapports
+          - module: Stock
+            slug: stock
+          - module: Ventes
+            slug: ventes
 
     steps:
       - name: Checkout repository
@@ -21,18 +50,18 @@ jobs:
 
       - name: Run Robot tests
         run: |
-          mkdir -p results/admin-achats
+          mkdir -p "results/${{ matrix.slug }}"
           docker run --rm \
             --shm-size=1g \
-            --volume "${PWD}/results/admin-achats:/tests/results" \
-            --env MODULE_PATH=/tests/TestSuite/ADMIN_ACCOUNT/Achats \
+            --volume "${PWD}/results/${{ matrix.slug }}:/tests/results" \
+            --env MODULE_PATH="/tests/TestSuite/ADMIN_ACCOUNT/${{ matrix.module }}" \
             pharma-robot-tests
 
       - name: Upload Robot reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: robot-admin-achats-reports
-          path: results/admin-achats
+          name: robot-admin-${{ matrix.slug }}-reports
+          path: results/${{ matrix.slug }}
           if-no-files-found: warn
           retention-days: 14

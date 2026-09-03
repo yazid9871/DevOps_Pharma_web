@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN wget -q https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz \
- && tar -xzf geckodriver-v0.36.0-linux64.tar.gz -C /usr/local/bin/ \
+RUN wget -q https://github.com/mozilla/geckodriver/releases/download/v0.37.1/geckodriver-v0.37.1-linux64.tar.gz \
+ && tar -xzf geckodriver-v0.37.1-linux64.tar.gz -C /usr/local/bin/ \
  && chmod +x /usr/local/bin/geckodriver \
- && rm geckodriver-v0.36.0-linux64.tar.gz
+ && rm geckodriver-v0.37.1-linux64.tar.gz
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
