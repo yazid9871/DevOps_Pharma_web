@@ -9,7 +9,7 @@ ${USERNAME}    meryredmonuser@gmail.com
 ${PASSWORD}     qwqwqw12@
 
 ${USERNAME2}    meryeme.user@gmail.com
-${PASSWORD2}  qw067    qwqwqw12@
+${PASSWORD2}    qwqwqw12@
 
 *** Keywords ***
 Ouvrir Le Navigateur Se Connecter
