@@ -2,7 +2,9 @@ name: Robot Admin Achats
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -14,40 +16,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install Firefox
-        id: setup-firefox
-        uses: browser-actions/setup-firefox@v1
-
-      - name: Install Geckodriver
-        uses: browser-actions/setup-geckodriver@latest
-
-      - name: Add Firefox to PATH
-        run: echo "$(dirname '${{ steps.setup-firefox.outputs.firefox-path }}')" >> "$GITHUB_PATH"
-
-      - name: Install virtual display
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Check test environment
-        run: |
-          python --version
-          robot --version
-          ls -l '${{ steps.setup-firefox.outputs.firefox-path }}'
-          geckodriver --version
+      - name: Build test image
+        run: docker build --tag pharma-robot-tests .
 
       - name: Run Robot tests
-        run: xvfb-run -a robot -d results/admin-achats TestSuite/ADMIN_ACCOUNT/Achats
+        run: |
+          mkdir -p results/admin-achats
+          docker run --rm \
+            --shm-size=1g \
+            --volume "${PWD}/results/admin-achats:/tests/results" \
+            --env MODULE_PATH=/tests/TestSuite/ADMIN_ACCOUNT/Achats \
+            pharma-robot-tests
 
       - name: Upload Robot reports
         if: always()
@@ -56,3 +35,4 @@ jobs:
           name: robot-admin-achats-reports
           path: results/admin-achats
           if-no-files-found: warn
+          retention-days: 14
