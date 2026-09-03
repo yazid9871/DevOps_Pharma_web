@@ -29,6 +29,7 @@ COPY Resources /tests/Resources
 COPY TestSuite /tests/TestSuite
 COPY run_robot.sh /run_robot.sh
 COPY normalize_allure.py /normalize_allure.py
+COPY close_browsers_listener.py /close_browsers_listener.py
 RUN chmod +x /run_robot.sh && mkdir -p /tests/results
 
 ENTRYPOINT ["/run_robot.sh"]

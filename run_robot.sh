@@ -9,6 +9,7 @@ set +e
 xvfb-run -a --server-args="-screen 0 1920x1080x24" \
   robot \
   --listener allure_robotframework:/tests/results/allure-results \
+  --listener /close_browsers_listener.py \
   -d /tests/results \
   "$test_path"
 robot_exit_code=$?
