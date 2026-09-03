@@ -108,3 +108,49 @@ jobs:
           path: results/${{ matrix.role }}/
           if-no-files-found: warn
           retention-days: 14
+
+  allure-report:
+    name: Generate Allure report
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Robot artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: robot-*-reports
+          path: downloaded-artifacts
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Allure CLI
+        run: |
+          ALLURE_VERSION=2.29.0
+          wget -q "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz"
+          tar -xzf "allure-${ALLURE_VERSION}.tgz"
+          echo "$PWD/allure-${ALLURE_VERSION}/bin" >> "$GITHUB_PATH"
+      - name: Generate merged Allure report
+        run: |
+          mapfile -t ALLURE_DIRS < <(find downloaded-artifacts -type d -name allure-results)
+          if [ "${#ALLURE_DIRS[@]}" -eq 0 ]; then
+            echo "::warning::No Allure results were found"
+            exit 0
+          fi
+          allure generate "${ALLURE_DIRS[@]}" --output allure-report --clean
+      - name: Create single-file Allure report
+        if: always()
+        run: |
+          if [ -d allure-report ]; then
+            python -m pip install allure-combine
+            allure-combine allure-report --dest allure-report
+          fi
+      - name: Upload merged Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          if-no-files-found: warn
+          retention-days: 30
