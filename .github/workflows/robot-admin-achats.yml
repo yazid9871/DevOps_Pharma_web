@@ -9,36 +9,108 @@ on:
 
 jobs:
   admin-achats:
-    name: ADMIN_ACCOUNT ${{ matrix.module }}
+    name: ${{ matrix.account }} ${{ matrix.module }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 3
       matrix:
         include:
-          - module: Achats
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Achats
             slug: achats
-          - module: Assistant_Marketplace
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Assistant_Marketplace
             slug: assistant-marketplace
-          - module: Clients
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Clients
             slug: clients
-          - module: Confrères
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Confrères
             slug: confreres
-          - module: Fournisseurs
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Fournisseurs
             slug: fournisseurs
-          - module: Marketing
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Marketing
             slug: marketing
-          - module: Organismes
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Organismes
             slug: organismes
-          - module: Paramètres
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Paramètres
             slug: parametres
-          - module: Produits
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Produits
             slug: produits
-          - module: Rapports
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Rapports
             slug: rapports
-          - module: Stock
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Stock
             slug: stock
-          - module: Ventes
+          - account: ADMIN_ACCOUNT
+            account_slug: admin
+            module: Ventes
+            slug: ventes
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Achats
+            slug: achats
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Assistant_Marketplace
+            slug: assistant-marketplace
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Clients
+            slug: clients
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Confrères
+            slug: confreres
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Fournisseurs
+            slug: fournisseurs
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Marketing
+            slug: marketing
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Organismes
+            slug: organismes
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Paramètres
+            slug: parametres
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Produits
+            slug: produits
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Rapports
+            slug: rapports
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Stock
+            slug: stock
+          - account: USER_ACCOUNT
+            account_slug: user
+            module: Ventes
             slug: ventes
 
     steps:
@@ -55,10 +127,10 @@ jobs:
           docker run --rm \
             --shm-size=1g \
             --volume "${PWD}/results/${{ matrix.slug }}:/tests/results" \
-            --env MODULE_PATH="/tests/TestSuite/ADMIN_ACCOUNT/${{ matrix.module }}" \
+            --env MODULE_PATH="/tests/TestSuite/${{ matrix.account }}/${{ matrix.module }}" \
             pharma-robot-tests
           robot_exit_code=$?
-          echo "## Robot ${{ matrix.module }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Robot ${{ matrix.account }} - ${{ matrix.module }}" >> "$GITHUB_STEP_SUMMARY"
           echo "Robot Framework exit code: $robot_exit_code" >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
@@ -66,7 +138,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: robot-admin-${{ matrix.slug }}-reports
+          name: robot-${{ matrix.account_slug }}-${{ matrix.slug }}-reports
           path: results/${{ matrix.slug }}
           if-no-files-found: warn
           retention-days: 14
