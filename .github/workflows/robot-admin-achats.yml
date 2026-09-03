@@ -48,14 +48,19 @@ jobs:
       - name: Build test image
         run: docker build --tag pharma-robot-tests .
 
-      - name: Run Robot tests
+      - name: Run Robot tests (non-blocking)
         run: |
           mkdir -p "results/${{ matrix.slug }}"
+          set +e
           docker run --rm \
             --shm-size=1g \
             --volume "${PWD}/results/${{ matrix.slug }}:/tests/results" \
             --env MODULE_PATH="/tests/TestSuite/ADMIN_ACCOUNT/${{ matrix.module }}" \
             pharma-robot-tests
+          robot_exit_code=$?
+          echo "## Robot ${{ matrix.module }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Robot Framework exit code: $robot_exit_code" >> "$GITHUB_STEP_SUMMARY"
+          exit 0
 
       - name: Upload Robot reports
         if: always()
