@@ -8,6 +8,8 @@ x-robot: &robot-defaults
 services:
   admin-rapports:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["admin-heavy-reports"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Rapports
@@ -104,6 +106,8 @@ services:
 
   user-rapports:
     <<: *robot-defaults
+    shm_size: "2gb"
+    mem_limit: "2g"
     profiles: ["user-heavy-reports"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Rapports
