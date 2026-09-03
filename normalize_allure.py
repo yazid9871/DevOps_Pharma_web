@@ -21,6 +21,17 @@ def main() -> None:
             (label.get("value") for label in labels if label.get("name") == "suite"),
             None,
         )
+        full_name_parts = (data.get("fullName") or "").split(".")
+        inferred_sub_suite = (
+            full_name_parts[1]
+            if len(full_name_parts) > 1 and full_name_parts[0] == module
+            else None
+        )
+        sub_suite = (
+            original_suite
+            if original_suite and original_suite != module
+            else inferred_sub_suite
+        )
 
         suite_label_names = {"parentSuite", "suite", "subSuite"}
         labels[:] = [label for label in labels if label.get("name") not in suite_label_names]
@@ -31,8 +42,8 @@ def main() -> None:
             ]
         )
 
-        if original_suite and original_suite != module:
-            labels.append({"name": "subSuite", "value": original_suite})
+        if sub_suite:
+            labels.append({"name": "subSuite", "value": sub_suite})
 
         result_file.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
