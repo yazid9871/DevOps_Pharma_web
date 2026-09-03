@@ -3,6 +3,7 @@ set -e
 
 test_path="${MODULE_PATH:-/tests/TestSuite/ADMIN_ACCOUNT/Achats}"
 account_name="$(basename "$(dirname "$test_path")")"
+module_name="$(basename "$test_path")"
 
 set +e
 xvfb-run -a --server-args="-screen 0 1920x1080x24" \
@@ -12,5 +13,5 @@ xvfb-run -a --server-args="-screen 0 1920x1080x24" \
   "$test_path"
 robot_exit_code=$?
 
-python /normalize_allure.py /tests/results/allure-results "$account_name"
+python /normalize_allure.py /tests/results/allure-results "$account_name" "$module_name"
 exit "$robot_exit_code"
