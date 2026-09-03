@@ -10,9 +10,6 @@ jobs:
     name: ADMIN_ACCOUNT Achats
     runs-on: ubuntu-latest
 
-    env:
-      MOZ_HEADLESS: "1"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,10 +20,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install Firefox
+        id: setup-firefox
         uses: browser-actions/setup-firefox@v1
 
       - name: Install Geckodriver
         uses: browser-actions/setup-geckodriver@latest
+
+      - name: Add Firefox to PATH
+        run: echo "$(dirname '${{ steps.setup-firefox.outputs.firefox-path }}')" >> "$GITHUB_PATH"
 
       - name: Install Python dependencies
         run: |
@@ -37,10 +38,12 @@ jobs:
         run: |
           python --version
           robot --version
-          firefox --version
+          '${{ steps.setup-firefox.outputs.firefox-path }}' --version
           geckodriver --version
 
       - name: Run Robot tests
+        env:
+          MOZ_HEADLESS: "1"
         run: robot -d results/admin-achats TestSuite/ADMIN_ACCOUNT/Achats
 
       - name: Upload Robot reports
