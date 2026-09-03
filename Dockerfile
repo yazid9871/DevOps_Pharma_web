@@ -2,12 +2,14 @@ FROM python:3.11-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:99
+ENV TZ=Africa/Casablanca
 
 RUN apt-get update && apt-get install -y \
     firefox-esr \
     wget \
     xvfb \
     fluxbox \
+    tzdata \
     libgtk-3-0 \
     libdbus-glib-1-2 \
     ca-certificates \
