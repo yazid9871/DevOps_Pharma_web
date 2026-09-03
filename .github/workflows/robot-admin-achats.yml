@@ -43,7 +43,7 @@ jobs:
         run: |
           python --version
           robot --version
-          xvfb-run -a '${{ steps.setup-firefox.outputs.firefox-path }}' --version
+          xvfb-run -a '${{ steps.setup-firefox.outputs.firefox-path }}' --version || true
           geckodriver --version
 
       - name: Run Robot tests
