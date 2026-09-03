@@ -1,0 +1,199 @@
+x-robot: &robot-defaults
+  image: ${ROBOT_IMAGE:?ROBOT_IMAGE is required}
+  entrypoint: ["/run_robot.sh"]
+  shm_size: "1gb"
+  mem_limit: "1g"
+  restart: "no"
+
+services:
+  admin-rapports:
+    <<: *robot-defaults
+    profiles: ["admin-heavy-reports"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Rapports
+    volumes:
+      - ./results/admin/rapports:/tests/results
+
+  admin-ventes:
+    <<: *robot-defaults
+    profiles: ["admin-heavy-sales"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Ventes
+    volumes:
+      - ./results/admin/ventes:/tests/results
+
+  admin-achats:
+    <<: *robot-defaults
+    profiles: ["admin-heavy-purchases"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Achats
+    volumes:
+      - ./results/admin/achats:/tests/results
+
+  admin-confreres:
+    <<: *robot-defaults
+    profiles: ["admin-medium"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Confrères
+    volumes:
+      - ./results/admin/confreres:/tests/results
+
+  admin-stock:
+    <<: *robot-defaults
+    profiles: ["admin-medium"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Stock
+    volumes:
+      - ./results/admin/stock:/tests/results
+
+  admin-clients:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Clients
+    volumes:
+      - ./results/admin/clients:/tests/results
+
+  admin-fournisseurs:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Fournisseurs
+    volumes:
+      - ./results/admin/fournisseurs:/tests/results
+
+  admin-produits:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Produits
+    volumes:
+      - ./results/admin/produits:/tests/results
+
+  admin-organismes:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Organismes
+    volumes:
+      - ./results/admin/organismes:/tests/results
+
+  admin-parametres:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Paramètres
+    volumes:
+      - ./results/admin/parametres:/tests/results
+
+  admin-marketing:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Marketing
+    volumes:
+      - ./results/admin/marketing:/tests/results
+
+  admin-assistant-marketplace:
+    <<: *robot-defaults
+    profiles: ["admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Assistant_Marketplace
+    volumes:
+      - ./results/admin/assistant-marketplace:/tests/results
+
+  user-rapports:
+    <<: *robot-defaults
+    profiles: ["user-heavy-reports"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Rapports
+    volumes:
+      - ./results/user/rapports:/tests/results
+
+  user-ventes:
+    <<: *robot-defaults
+    profiles: ["user-heavy-sales"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Ventes
+    volumes:
+      - ./results/user/ventes:/tests/results
+
+  user-achats:
+    <<: *robot-defaults
+    profiles: ["user-heavy-purchases"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Achats
+    volumes:
+      - ./results/user/achats:/tests/results
+
+  user-confreres:
+    <<: *robot-defaults
+    profiles: ["user-medium"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Confrères
+    volumes:
+      - ./results/user/confreres:/tests/results
+
+  user-stock:
+    <<: *robot-defaults
+    profiles: ["user-medium"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Stock
+    volumes:
+      - ./results/user/stock:/tests/results
+
+  user-clients:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Clients
+    volumes:
+      - ./results/user/clients:/tests/results
+
+  user-fournisseurs:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Fournisseurs
+    volumes:
+      - ./results/user/fournisseurs:/tests/results
+
+  user-produits:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Produits
+    volumes:
+      - ./results/user/produits:/tests/results
+
+  user-organismes:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Organismes
+    volumes:
+      - ./results/user/organismes:/tests/results
+
+  user-parametres:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Paramètres
+    volumes:
+      - ./results/user/parametres:/tests/results
+
+  user-marketing:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Marketing
+    volumes:
+      - ./results/user/marketing:/tests/results
+
+  user-assistant-marketplace:
+    <<: *robot-defaults
+    profiles: ["user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Assistant_Marketplace
+    volumes:
+      - ./results/user/assistant-marketplace:/tests/results

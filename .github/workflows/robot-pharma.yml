@@ -1,0 +1,110 @@
+name: Robot Pharma Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/pharma-robot
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    name: Build test image
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        run: |
+          image="${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}"
+          echo "image=${image,,}" >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  test:
+    name: ${{ matrix.label }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - group: admin-heavy-reports
+            role: admin
+            label: ADMIN - Rapports (320 tests)
+          - group: admin-heavy-sales
+            role: admin
+            label: ADMIN - Ventes (207 tests)
+          - group: admin-heavy-purchases
+            role: admin
+            label: ADMIN - Achats (116 tests)
+          - group: admin-medium
+            role: admin
+            label: ADMIN - Confreres et Stock (175 tests)
+          - group: admin-light
+            role: admin
+            label: ADMIN - Modules legers (241 tests)
+          - group: user-heavy-reports
+            role: user
+            label: USER - Rapports (320 tests)
+          - group: user-heavy-sales
+            role: user
+            label: USER - Ventes (207 tests)
+          - group: user-heavy-purchases
+            role: user
+            label: USER - Achats (107 tests)
+          - group: user-medium
+            role: user
+            label: USER - Confreres et Stock (175 tests)
+          - group: user-light
+            role: user
+            label: USER - Modules legers (240 tests)
+    env:
+      ROBOT_IMAGE: ${{ needs.build.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull test image
+        run: docker pull "$ROBOT_IMAGE"
+      - name: Run Robot tests (non-blocking)
+        run: |
+          set +e
+          docker compose --profile "${{ matrix.group }}" up --no-color
+          robot_exit_code=$?
+          echo "## ${{ matrix.label }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Docker Compose exit code: $robot_exit_code" >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+      - name: Upload Robot reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-${{ matrix.group }}-reports
+          path: results/${{ matrix.role }}/
+          if-no-files-found: warn
+          retention-days: 14
