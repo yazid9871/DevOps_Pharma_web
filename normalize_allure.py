@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Normalize Allure suite labels to account > module > Robot suite."""
+"""Normalize Allure identities and suite labels for merged account reports."""
 
+import hashlib
 import json
 import sys
 from pathlib import Path
+
+
+def stable_id(*parts):
+    value = "|".join(part for part in parts if part)
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
 def main() -> None:
@@ -16,12 +22,20 @@ def main() -> None:
 
     for result_file in results_dir.glob("*-result.json"):
         data = json.loads(result_file.read_text(encoding="utf-8"))
+        original_full_name = data.get("fullName") or data.get("name") or ""
+        original_history_id = data.get("historyId") or original_full_name
+        data["fullName"] = ".".join(
+            part for part in [account, module, original_full_name] if part
+        )
+        data["historyId"] = stable_id(account, module, original_history_id)
+        data["testCaseId"] = stable_id(account, module, data.get("testCaseId") or original_full_name)
+
         labels = data.setdefault("labels", [])
         original_suite = next(
             (label.get("value") for label in labels if label.get("name") == "suite"),
             None,
         )
-        full_name_parts = (data.get("fullName") or "").split(".")
+        full_name_parts = original_full_name.split(".")
         inferred_sub_suite = (
             full_name_parts[1]
             if len(full_name_parts) > 1 and full_name_parts[0] == module
