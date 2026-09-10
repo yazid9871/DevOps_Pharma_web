@@ -14,8 +14,8 @@
   {
     "name": "Element not found / locator",
     "matchedStatuses": ["failed", "broken"],
-    "messageRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element|Element '.*' not found).*",
-    "traceRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element|Element '.*' not found).*"
+    "messageRegex": ".*(NoSuchElementException|Element with locator .* not found|Checkbox with locator .* not found|Unable to locate element|Element '.*' not found).*",
+    "traceRegex": ".*(NoSuchElementException|Element with locator .* not found|Checkbox with locator .* not found|Unable to locate element|Element '.*' not found).*"
   },
   {
     "name": "Timeout / page not ready",
@@ -32,8 +32,8 @@
   {
     "name": "Assertion / expected result mismatch",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|.+ does not contain .+|.+ should contain .+).*",
-    "traceRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|.+ does not contain .+|.+ should contain .+).*"
+    "messageRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|Page should have contained text|.+ does not contain .+|.+ should contain .+|.+ == .+).*",
+    "traceRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|Page should have contained text|.+ does not contain .+|.+ should contain .+|.+ == .+).*"
   },
   {
     "name": "Robot keyword missing / syntax",
