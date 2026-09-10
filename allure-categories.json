@@ -14,14 +14,14 @@
   {
     "name": "Element not found / locator",
     "matchedStatuses": ["failed", "broken"],
-    "messageRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element).*",
-    "traceRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element).*"
+    "messageRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element|Element '.*' not found).*",
+    "traceRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element|Element '.*' not found).*"
   },
   {
     "name": "Timeout / page not ready",
     "matchedStatuses": ["failed", "broken"],
-    "messageRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met).*",
-    "traceRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met).*"
+    "messageRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met|not visible after [0-9]+ seconds|did not appear in [0-9]+ seconds|not clickable after [0-9]+ seconds).*",
+    "traceRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met|not visible after [0-9]+ seconds|did not appear in [0-9]+ seconds|not clickable after [0-9]+ seconds).*"
   },
   {
     "name": "Stale element / DOM changed",
@@ -32,8 +32,8 @@
   {
     "name": "Assertion / expected result mismatch",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected).*",
-    "traceRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected).*"
+    "messageRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|.+ does not contain .+|.+ should contain .+).*",
+    "traceRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected|.+ does not contain .+|.+ should contain .+).*"
   },
   {
     "name": "Robot keyword missing / syntax",
@@ -52,9 +52,5 @@
     "matchedStatuses": ["broken"],
     "messageRegex": ".*(WebDriverException|SessionNotCreatedException|invalid session id|Failed to decode response from marionette|Reached error page).*",
     "traceRegex": ".*(WebDriverException|SessionNotCreatedException|invalid session id|Failed to decode response from marionette|Reached error page).*"
-  },
-  {
-    "name": "Other product defects",
-    "matchedStatuses": ["failed", "broken"]
   }
 ]
