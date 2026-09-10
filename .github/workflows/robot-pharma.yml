@@ -151,7 +151,7 @@ jobs:
     timeout-minutes: 75
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 6
       matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
     env:
       ROBOT_IMAGE: ${{ needs.build.outputs.image }}
