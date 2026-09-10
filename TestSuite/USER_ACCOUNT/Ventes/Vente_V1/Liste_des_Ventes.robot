@@ -50,14 +50,14 @@ Rechercher Par Date De Vente
     Vérifier La Visibilité Des Champs De Recherche Ventes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Ventes
-    Vérifier La Recherche     td[2]       2026-06-09     ${CHAMP_DATE_VENTE}
+     Vérifier La Recherche par date      td[2]       2026-06-09     ${CHAMP_DATE_VENTE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'une Vente par sa date de création (Créé le).
     Vérifier La Visibilité Des Champs De Recherche Ventes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Ventes
-    Vérifier La Recherche     td[3]     2026-07-31 15:34:37     ${CHAMP_CREE_LE_VENTE}
+     Vérifier La Recherche par date     td[3]     2026-07-31 15:34:37     ${CHAMP_CREE_LE_VENTE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'une Vente par son montant total.

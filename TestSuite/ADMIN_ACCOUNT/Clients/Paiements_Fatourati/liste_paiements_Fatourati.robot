@@ -40,7 +40,7 @@ Vérifier La Recherche Par Date De Génération
     Vérifier La Visibilité Des Champs De Recherche
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide
-    Vérifier La Recherche     td[2]     2026-06-09    ${CHAMP_DATE_PAIEMENT}
+    Vérifier La Recherche par date      td[2]     2026-06-09    ${CHAMP_DATE_PAIEMENT}
 
 Vérifier La Recherche Par Statut
     [Documentation]    Vérifie la recherche d'un Paiement Fatourati par son statut.

@@ -46,7 +46,7 @@ Rechercher Par Date
     Vérifier La Visibilité Des Champs De Recherche Retours sur ventes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Retours sur ventes
-    Vérifier La Recherche     td[2]       2026-08-05     ${CHAMP_DATE_RETOUR}
+     Vérifier La Recherche par date     td[2]       2026-08-05     ${CHAMP_DATE_RETOUR}
 
 Vérifier La Recherche Par Montant Restitué
     [Documentation]    Vérifie la recherche d'un Retour sur vente par son montant restitué.

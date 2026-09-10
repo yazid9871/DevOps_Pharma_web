@@ -42,7 +42,7 @@ Rechercher Par Date De Facture
     Vérifier La Visibilité Des Champs De Recherche Factures organismes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Factures organismes
-    Vérifier La Recherche     td[2]    2026-04-15    ${CHAMP_DATE_FACTURE_ORGANISME}
+     Vérifier La Recherche par date      td[2]    2026-04-15    ${CHAMP_DATE_FACTURE_ORGANISME}
 
 Rechercher Par Numéro De Dossier
     [Documentation]    Vérifie la recherche d'une Facture organisme par son numéro de dossier.

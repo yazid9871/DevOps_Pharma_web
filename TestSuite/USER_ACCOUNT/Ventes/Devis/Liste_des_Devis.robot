@@ -46,14 +46,14 @@ Rechercher Par Date De Validité
     Vérifier La Visibilité Des Champs De Recherche Devis
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Devis
-    Vérifier La Recherche     td[2]       2026-07-31     ${CHAMP_VALABLE_JUSQUAU_DEVIS}
+     Vérifier La Recherche par date      td[2]       2026-07-31     ${CHAMP_VALABLE_JUSQUAU_DEVIS}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'un Devis par son montant total.
     Vérifier La Visibilité Des Champs De Recherche Devis
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Devis
-    Vérifier La Recherche     td[3]     78    ${CHAMP_TOTAL_DEVIS}
+     Vérifier La Recherche par date     td[3]     78    ${CHAMP_TOTAL_DEVIS}
 
 Rechercher Par Statut
     [Documentation]    Vérifie que la recherche par statut fonctionne correctement

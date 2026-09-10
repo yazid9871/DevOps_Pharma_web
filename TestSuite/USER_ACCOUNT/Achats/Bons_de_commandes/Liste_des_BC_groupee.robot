@@ -50,14 +50,14 @@ Rechercher Par Date Limite
     Vérifier La Visibilité Des Champs De Recherche Commandes groupées
     Cliquer Sur Actualiser Commandes groupées
     Vérifier Que Le Champ De Recherche Est Vide Commandes groupées
-    Vérifier La Recherche     td[4]    2027-06-08    ${CHAMP_DEADLINE_BC_GROUPEE}
+    Vérifier La Recherche par date     td[4]    2027-06-08    ${CHAMP_DEADLINE_BC_GROUPEE}
 
 Rechercher Par Date De Mise À Jour
     [Documentation]    Vérifie que la recherche par date de mise à jour (Updated on) fonctionne correctement
     Vérifier La Visibilité Des Champs De Recherche Commandes groupées
     Cliquer Sur Actualiser Commandes groupées
     Vérifier Que Le Champ De Recherche Est Vide Commandes groupées
-    Vérifier La Recherche     td[5]    2026-08-06    ${CHAMP_MISE_A_JOUR_BC_GROUPEE}
+     Vérifier La Recherche par date      td[5]    2026-08-06    ${CHAMP_MISE_A_JOUR_BC_GROUPEE}
 
 Vérifier La Recherche Par Quantité Totale
     [Documentation]    Vérifie la recherche d'une Commande groupée par sa quantité totale.

@@ -59,31 +59,34 @@ jobs:
             label: ADMIN - Rapports (320 tests)
           - group: admin-heavy-sales
             role: admin
-            label: ADMIN - Ventes (207 tests)
+            label: ADMIN - Ventes (416 tests)
           - group: admin-heavy-purchases
             role: admin
-            label: ADMIN - Achats (116 tests)
+            label: ADMIN - Achats (685 tests)
           - group: admin-medium
             role: admin
-            label: ADMIN - Confreres et Stock (175 tests)
+            label: ADMIN - Confreres et Stock (229 tests)
           - group: admin-light
             role: admin
-            label: ADMIN - Modules legers (241 tests)
+            label: ADMIN - Modules legers (368 tests)
           - group: user-heavy-reports
             role: user
             label: USER - Rapports (320 tests)
           - group: user-heavy-sales
             role: user
-            label: USER - Ventes (207 tests)
+            label: USER - Ventes (363 tests)
           - group: user-heavy-purchases
             role: user
-            label: USER - Achats (107 tests)
+            label: USER - Achats (676 tests)
           - group: user-medium
             role: user
-            label: USER - Confreres et Stock (175 tests)
+            label: USER - Confreres et Stock (227 tests)
           - group: user-light
             role: user
-            label: USER - Modules legers (240 tests)
+            label: USER - Modules legers (367 tests)
+          - group: freemium
+            role: freemium
+            label: FREEMIUM - Modules (312 tests)
     env:
       ROBOT_IMAGE: ${{ needs.build.outputs.image }}
     steps:

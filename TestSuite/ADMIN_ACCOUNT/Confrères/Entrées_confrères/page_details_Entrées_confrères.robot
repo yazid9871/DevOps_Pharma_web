@@ -21,18 +21,16 @@ Accéder à la page Entrées confrères
     ...                connexion.
     Accéder à la page    colleagues/purchases
 
+Aller à la page détails du Entrées confrères Brouillon
+    Aller à la page détails de l'Entrée confrère      ${ENTREE_BROUILLON_ID}
+Vérifier le statut du Entrées confrères Brouillon
+   Vérifier le statut de l'Entrée confrère    Brouillon
 Vérifier la page détails Entrées confrères avec le statut Brouillon
-    [Documentation]    Ouvre une entrée confrère avec le statut "Brouillon" et vérifie que les
-    ...                boutons "Annuler", "Générer un PDF", "Dupliquer" et "Modifier" sont
-    ...                visibles. Contrairement à la page Devis, la page Entrées confrères ne
-    ...                possède pas de menu "Autres actions" : les actions sont toujours affichées
-    ...                directement.
-    Aller à la page détails de l'Entrée confrère    ${ENTREE_BROUILLON_ID}
-    Vérifier le statut de l'Entrée confrère    Brouillon
-    Wait Until Element Is Visible    xpath=//*[@data-testid="annuler"]    10s
-    Wait Until Element Is Visible    xpath=//*[@data-testid="générer_un_pdf"]    10s
-    Wait Until Element Is Visible    xpath=//*[@data-testid="dupliquer"]    10s
-    Wait Until Element Is Visible    xpath=//*[@data-testid="modifier"]    10s
+    Vérifier les boutons d'action Brouillon
+
+
+
+
 
 Vérifier la page détails Entrées confrères avec le statut Complété
     [Documentation]    Ouvre une entrée confrère avec le statut "Complété" et vérifie que les
@@ -88,3 +86,8 @@ Aller à la page détails de l'Entrée confrère
 Vérifier le statut de l'Entrée confrère
     [Arguments]    ${statut}
      Wait Until Page Contains     ${statut}     timeout=20s
+Vérifier les boutons d'action Brouillon
+    Wait Until Element Is Visible    xpath=//*[@data-testid="annuler"]    10s
+    Wait Until Element Is Visible    xpath=//*[@data-testid="générer_un_pdf"]    10s
+    Wait Until Element Is Visible    xpath=//*[@data-testid="dupliquer"]    10s
+    Wait Until Element Is Visible    xpath=//*[@data-testid="modifier"]    10s

@@ -209,3 +209,11 @@ services:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Assistant_Marketplace
     volumes:
       - ./results/user/assistant-marketplace:/tests/results
+
+  freemium:
+    <<: *robot-defaults
+    profiles: ["freemium"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/FREEMIUM_ACCOUNT
+    volumes:
+      - ./results/freemium:/tests/results

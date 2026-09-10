@@ -59,7 +59,7 @@ Rechercher Par Date
     [Documentation]    Vérifie que la recherche par Date fonctionne correctement
     Accéder à la page    expenses
     Cliquer Sur Rechercher Pour Afficher Le Champ
-    Vérifier La Recherche     td[3]     2026-01-01     ${CHAMP_DATE_DEPENSE}
+     Vérifier La Recherche par date      td[3]     2026-01-01     ${CHAMP_DATE_DEPENSE}
 
 Rechercher Par Montant
     [Documentation]    Vérifie que la recherche par Montant fonctionne correctement

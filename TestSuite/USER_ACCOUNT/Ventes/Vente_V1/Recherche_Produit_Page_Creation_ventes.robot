@@ -4,6 +4,7 @@ Library           SeleniumLibrary
 Library            String
 Resource          ../../../../Resources/Authentification_user.robot
 Resource          ../../../../Resources/MotsClesCommuns.robot
+Resource          ../../../../Resources/PageCreationMotsClesCommuns.robot
 Resource          ../../../../Resources/Variables.robot
 Suite Setup       Ouvrir Le Navigateur Se Connecter 2
 #Suite Teardown    Close Browser
@@ -29,7 +30,8 @@ Accéder à la page de création de ventesventes
      ...                puis ouverture de la page de création d'un nouveau ventes.
      Accéder à la page    invoices
      Aller à la page de création de ventes
-
+valide le compte user par ecurity_code
+     valide le compte user par ecurity_code      ${PASSWORD2}
 Vérifier le choix du client
      [Documentation]    Vérifie que le champ "Client" ouvre bien le popup de sélection des
      ...                clients et que le client sélectionné est correctement affiché.

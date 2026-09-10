@@ -1,11 +1,11 @@
 *** Settings ***
 Documentation     Tests fonctionnels de la page "Page de création de vente :verify_calcule_de_discount"
 Library           SeleniumLibrary
-Library    Collections
 
 Library            String
 Resource          ../../../../Resources/Authentification_Admin.robot
 Resource          ../../../../Resources/MotsClesCommuns.robot
+Resource          ../../../../Resources/PageCreationMotsClesCommuns.robot
 Resource          ../../../../Resources/Variables.robot
 Suite Setup       Ouvrir Le Navigateur Se Connecter 2
 #Suite Teardown    Close Browser
@@ -18,13 +18,11 @@ ${ADD_BUTTON}        xpath=//*[@data-testid="créer"]
 ${Gestionnaire}        css=.sob-v2-navbar-user-fullName
 ${draft_button}      xpath=//*[@data-testid="brouillon"]
 ${table}           //tbody[contains(@class, 'prevent-select')]//tr
-${SEARCH_FIELD_CODEBARRE}      xpath=//*[@id="barcode"]
 ${REMISE_BUTTON}         xpath=//div[@class='text']//button[@data-testid='false']
 ${DISCOUNT_INPUT}        id=global_discount
 ${TYPE_SELECT}       id=global_discount_type
 ${DISCOUNT_SELECT}     id=global_discount_application_type
 ${DISCOUNT_SUBMITE}         xpath=//*[@data-testid="appliquer"]
-${table2}                 //table[contains(@class, 'sob-v2-table')]//tbody//tr
 @{PU_LIST}
 ${total_pay}        css=.selectedPrducts__total--payment > p:nth-child(2) > span:nth-child(1)
 
@@ -36,8 +34,8 @@ aller à la page de création de vente
 
 
 Sélectionner des produits
-    Sélectionner des produits    8009004800229
-    Sélectionner des produits      5903205740977
+   Sélectionner des produits par code barre    8009004800229
+   Sélectionner des produits par code barre       5903205740977
 vérifier la remise par produit (type % )
     ouvrir le popup remise
     remise par produit
@@ -75,15 +73,7 @@ aller à la page de création de vente
 
 
 
-Sélectionner des produits
-     [Arguments]     ${product1}
-    Input Text    ${SEARCH_FIELD_CODEBARRE}    ${product1}
-    Press Keys    ${SEARCH_FIELD_CODEBARRE}    RETURN
-    sleep    2s
-       ${col}    set variable       [2]/td[3]
-          ${xpath_tab}    set variable     ${table2}${col}
-          ${product_ppv_from_list}  get text   xpath=${xpath_tab}
-        Append To List    ${PU_LIST}    ${product_ppv_from_list}
+
 ouvrir le popup remise
     click element   ${REMISE_BUTTON}
     wait until page contains    Remise globale    10s

@@ -37,7 +37,7 @@ Rechercher Par Date
    Vérifier La Visibilité Des Champs De Recherche Inventaires
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Inventaires
-    Vérifier La Recherche     td[1]    2026-08-07   ${CHAMP_DATE_INVENTAIRE}
+     Vérifier La Recherche par date      td[1]    2026-08-07   ${CHAMP_DATE_INVENTAIRE}
 
 Rechercher Par Modifié Par
     [Documentation]    Vérifie que la recherche par utilisateur ayant modifié (Updated By) fonctionne correctement
@@ -58,14 +58,14 @@ Rechercher Par Date De Création
     Vérifier La Visibilité Des Champs De Recherche Inventaires
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Inventaires
-    Vérifier La Recherche     td[8]    2026-08-07    ${CHAMP_CREE_LE_INVENTAIRE}
+    Vérifier La Recherche par date     td[8]    2026-08-07    ${CHAMP_CREE_LE_INVENTAIRE}
 
 Rechercher Par Date De Modification
     [Documentation]    Vérifie la recherche d'un Inventaire par sa date de modification (Modifié le).
     Vérifier La Visibilité Des Champs De Recherche Inventaires
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Inventaires
-    Vérifier La Recherche     td[9]    2026-08-07    ${CHAMP_MODIFIE_LE_INVENTAIRE}
+     Vérifier La Recherche par date      td[9]    2026-08-07    ${CHAMP_MODIFIE_LE_INVENTAIRE}
 
 Rechercher Par Méthode
     [Documentation]    Vérifie que la recherche par méthode fonctionne correctement

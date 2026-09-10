@@ -6,6 +6,7 @@ Library    Collections
 Library            String
 Resource          ../../../../Resources/Authentification_user.robot
 Resource          ../../../../Resources/MotsClesCommuns.robot
+Resource          ../../../../Resources/PageCreationMotsClesCommuns.robot
 Resource          ../../../../Resources/Variables.robot
 Suite Setup       Ouvrir Le Navigateur Se Connecter 2
 #Suite Teardown    Close Browser
@@ -33,7 +34,8 @@ aller à la page de création de vente
 
     Aller à la page de liste des ventes
     aller à la page de création de vente
-
+valide le compte user par ecurity_code
+     valide le compte user par ecurity_code      ${PASSWORD2}
 
 Sélectionner des produits
     Sélectionner des produits    8009004800229

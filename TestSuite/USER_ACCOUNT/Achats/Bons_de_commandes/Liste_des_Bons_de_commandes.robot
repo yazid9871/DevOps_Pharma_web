@@ -60,14 +60,14 @@ Rechercher Par Date Du Bon De Commande
     Vérifier La Visibilité Des Champs De Recherche Bons de commandes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Bons de commandes
-    Vérifier La Recherche     td[3]    2026-08-07    ${CHAMP_DATE_BON_COMMANDE}
+     Vérifier La Recherche par date     td[3]    2026-08-07    ${CHAMP_DATE_BON_COMMANDE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'un Bon de commande par sa date de création (Créé le).
      Vérifier La Visibilité Des Champs De Recherche Bons de commandes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Bons de commandes
-   Vérifier La Recherche     td[4]    2026-08-07    ${CHAMP_CREE_LE_BON_COMMANDE}
+    Vérifier La Recherche par date     td[4]    2026-08-07    ${CHAMP_CREE_LE_BON_COMMANDE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'un Bon de commande par son montant total.

@@ -40,14 +40,14 @@ Rechercher Par Date De Vente
     Vérifier La Visibilité Des Champs De Recherche Factures globales
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Factures globales
-    Vérifier La Recherche     td[2]       2026-08-06     ${CHAMP_DATE_VENTE_FACTURE_GLOBALE}
+    Vérifier La Recherche par date      td[2]       2026-08-06     ${CHAMP_DATE_VENTE_FACTURE_GLOBALE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'une Facture globale par sa date de création (Créé le).
     Vérifier La Visibilité Des Champs De Recherche Factures globales
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Factures globales
-    Vérifier La Recherche     td[4]     2026-08-06     ${CHAMP_CREE_LE_FACTURE_GLOBALE}
+     Vérifier La Recherche par date     td[4]     2026-08-06     ${CHAMP_CREE_LE_FACTURE_GLOBALE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'une Facture globale par son montant total.

@@ -44,7 +44,6 @@ soumettre un formulaire vide
 remplir les champs
     remplir les champs
 Rechercher par nom de produit
-     [Tags]  recherche par  nom de produit
    Vérifier que les champs de recherche sont visibles
     Vérifier que le champ de saisie est vide
     Saisir la recherche par nom de produit
@@ -80,7 +79,6 @@ sélectionner plusieurs produits avec TVA
     sélectionner le produit 2
     Vérifier le popup prix produit
 choisir le produit une seconde fois et vérifier la quantité
-     [Tags]  choisir le produit une seconde fois et vérifier la quantité
     sélectionner le produit deux fois et vérifier le total et le nombre
 
 vérifier la remise par produit (type % )
@@ -112,6 +110,7 @@ vérifier la remise par montant produit type montant
      remise par montant produit type montant
 cliquer sur imprimer et vérifier le résultat
     cliquer sur imprimer
+
 *** Keywords ***
 Aller à la page Générer une facture
      wait until element is visible      xpath=//*[@data-testid="suivant"]

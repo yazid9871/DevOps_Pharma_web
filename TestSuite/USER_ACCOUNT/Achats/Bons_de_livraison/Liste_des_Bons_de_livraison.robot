@@ -51,7 +51,7 @@ Rechercher Par Date Bon De Livraison
     Vérifier La Visibilité Des Champs De Recherche Bons de livraison
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Bons de livraison
-    Vérifier La Recherche     td[2]    2026-08-05    ${CHAMP_DATE_BON_LIVRAISON}
+    Vérifier La Recherche par date    td[2]    2026-08-05    ${CHAMP_DATE_BON_LIVRAISON}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'un Bon de livraison par sa date de création (Créé le).

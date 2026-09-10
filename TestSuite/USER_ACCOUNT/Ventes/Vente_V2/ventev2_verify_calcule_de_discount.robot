@@ -1,0 +1,173 @@
+*** Settings ***
+Documentation     Tests fonctionnels de la page "Page de création de vente :verify_calcule_de_discount"
+Library           SeleniumLibrary
+
+Library            String
+Resource          ../../../../Resources/Authentification_user.robot
+Resource          ../../../../Resources/MotsClesCommuns.robot
+Resource          ../../../../Resources/PageCreationMotsClesCommuns.robot
+Resource          ../../../../Resources/Variables.robot
+Suite Setup       Ouvrir Le Navigateur Se Connecter 2
+#Suite Teardown    Close Browser
+Force Tags        Page de création de vente : verify_calcule_de_discount
+
+*** Variables ***
+
+
+${ADD_BUTTON}        xpath=//*[@data-testid="créer"]
+${Gestionnaire}        css=.sob-v2-navbar-user-fullName
+${draft_button}      xpath=//*[@data-testid="brouillon"]
+${DISCOUNT_INPUT}        id=global_discount
+${TYPE_SELECT}       id=global_discount_type
+${DISCOUNT_SELECT}     id=global_discount_application_type
+${DISCOUNT_SUBMITE}         xpath=//*[@data-testid="appliquer"]
+@{PU_LIST}
+${total_pay}        css=.data > p:nth-child(1)
+${REMISE_BUTTONv2}         xpath=//div[@class='totals__infos__globalDiscount']//button[@data-testid='false']
+
+*** Test Cases ***
+aller à la page de création de vente
+
+    Aller à la page de liste des ventes
+    aller à la page de création de vente
+valide le compte user par ecurity_code
+     valide le compte user par ecurity_code      ${PASSWORD2}
+
+Sélectionner des produits
+   Sélectionner des produits par code barre    8009004800229
+   Sélectionner des produits par code barre       5903205740977
+vérifier la remise par produit (type % )
+    ouvrir le popup remise
+    remise par produit
+    soumettre la remise
+    vérifier la remise par produit %
+vérifier la remise par montant produit (type % )
+    ouvrir le popup remise
+     remise par montant produit %
+vérifier la remise par rectification du total
+    ouvrir le popup remise
+     remise par rectification du total
+annuler la remise
+    ouvrir le popup remise
+    annuler la remise
+    soumettre la remise
+vérifier la remise par produit type montant
+    ouvrir le popup remise
+    remise par produit ( type montant )
+    remise par produit
+    soumettre la remise
+    vérifier la remise par produit type montant
+
+vérifier la remise par montant produit type montant
+    ouvrir le popup remise
+     remise par montant produit type montant
+*** Keywords ***
+
+Aller à la page de liste des ventes
+    [Documentation]    Naviguer vers la page de liste après connexion.
+    Go To    ${BASE_URL}/invoices
+   wait until element is visible      ${ADD_BUTTON}    timeout=15s
+aller à la page de création de vente
+    Go To    ${BASE_URL}/invoice/create/cashier-mode?source=invoices
+     Wait Until Element Is Visible   ${draft_button}  timeout=30s
+
+
+
+
+ouvrir le popup remise
+    click element   ${REMISE_BUTTONv2}
+    wait until page contains    Remise globale    10s
+remise par produit
+    input text    ${DISCOUNT_INPUT}     10
+soumettre la remise
+      click element   ${DISCOUNT_SUBMITE}
+      sleep    2s
+vérifier la remise par produit %
+    ${table_rows}  Get Element Count      xpath=${table2}
+        Should Be True  ${table_rows} > 0
+        FOR  ${row}  IN RANGE  2    ${table_rows} + 1    7
+             ${col}    set variable    [${row}]/td[3]/span[1]
+          ${xpath_tab}    set variable     ${table2}${col}
+          ${cell_text}  get text   xpath=${xpath_tab}
+           @{result_list}    Create List
+           ${list_length}=    Get Length    ${PU_LIST}
+           FOR  ${index}  IN RANGE    0   ${list_length}
+              ${value}  Get From List    ${PU_LIST}  ${index}
+              ${value_num}    Evaluate    float('${value}'.strip().replace(',', '.'))
+               ${result}     Evaluate     format(round( ${value_num} - (( ${value_num} * 10) / 100) , 2), ".2f").replace('.', ',')
+               append To List    ${result_list}    ${result}
+            END
+
+           Should Contain  ${result_list}  ${cell_text}  in
+        END
+remise par montant produit %
+           ${tota}    get text    ${total_pay}
+          ${tota_num}    Evaluate    float('${tota}'.strip().replace(',', '.'))
+          ${result}     Evaluate     format(round( ${tota_num} - (( ${tota_num} * 10) / 100) , 2), ".2f").replace('.', ',')
+        ${t}      set variable     ${result}
+        click element    ${discount_select}
+        sleep    2s
+      click element       css=.sob-v2-select__option:nth-child(2)
+      sleep    2s
+      input text    ${DISCOUNT_INPUT}     10
+        click element   ${DISCOUNT_SUBMITE}
+      sleep    2s
+      ${total_span}    get text    ${total_pay}
+      ${total_span}    Strip String    ${total_span}
+       should be equal    ${t}  ${total_span}
+remise par rectification du total
+     ${tota}    get text    ${total_pay}
+        click element     ${discount_select}
+        sleep    2s
+      click element        css=.sob-v2-select__option:nth-child(3)
+      sleep    2s
+       input text    id=global_discount__total  160
+        click element   ${DISCOUNT_SUBMITE}
+        sleep    2s
+         ${total_span}    get text    ${total_pay}
+         ${total_span}    Strip String    ${total_span}
+          should be equal    ${total_span}     160,00
+
+annuler la remise
+  input text    ${DISCOUNT_INPUT}     0
+
+remise par produit ( type montant )
+      click element    ${type_select}
+      click element      css=.sob-v2-select__option:nth-child(2)
+       sleep     2s
+vérifier la remise par produit type montant
+   ${table_rows}  Get Element Count      xpath=${table2}
+        Should Be True  ${table_rows} > 0
+        FOR  ${row}  IN RANGE    2    ${table_rows} + 1    7
+            ${col}    set variable    [${row}]/td[3]/span[1]
+          ${xpath_tab}    set variable     ${table2}${col}
+          ${cell_text}  get text   xpath= ${xpath_tab}
+           @{result_list}    Create List
+            ${list_length}=    Get Length    ${PU_LIST}
+           FOR  ${index}  IN RANGE    0     ${list_length}
+              ${value}  Get From List    ${PU_LIST}  ${index}
+              ${value_num}    Evaluate    float('${value}'.strip().replace(',', '.'))
+               ${result}     Evaluate     format(round( ${value_num} - 10 , 2), ".2f").replace('.', ',')
+               append To List    ${result_list}    ${result}
+            END
+
+           Should Contain  ${result_list}  ${cell_text}  in
+        END
+
+remise par montant produit type montant
+           ${tota}    get text    ${total_pay}
+            ${tota_num}    Evaluate    float('${tota}'.strip().replace(',', '.'))
+            ${result}     Evaluate     format(round( ${tota_num} - 10, 2), ".2f").replace('.', ',')
+            ${t}      set variable     ${result}
+      click element       ${discount_select}
+      click element         css=.sob-v2-select__option:nth-child(2)
+       sleep     2s
+       click element         ${type_select}
+      click element          css=.sob-v2-select__option:nth-child(2)
+      sleep    2s
+      input text    ${DISCOUNT_INPUT}     10
+        click element   ${DISCOUNT_SUBMITE}
+      sleep    2s
+      ${total_span}    get text    ${total_pay}
+      ${total_span}    Strip String    ${total_span}
+       should be equal    ${t}  ${total_span}

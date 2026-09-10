@@ -42,7 +42,7 @@ Rechercher Par Date
     Vérifier La Visibilité Des Champs De Recherche Avoirs fournisseurs émis
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Avoirs fournisseurs émis
-    Vérifier La Recherche     td[2]    2026-08-04    ${CHAMP_DATE_AVOIR_FOURNISSEUR}
+    Vérifier La Recherche par date     td[2]    2026-08-04    ${CHAMP_DATE_AVOIR_FOURNISSEUR}
 
 Vérifier La Recherche Par Total Émis
     [Documentation]    Vérifie la recherche d'un Avoir fournisseur émis par son total émis.

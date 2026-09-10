@@ -331,3 +331,9 @@ ${CHAMP_MONTANT_DEPENSE}             id=amount
 ${CHAMP_STATUT_DEPENSE}              id=status.q
 ${BOUTON_IMPRIMER_DEPENSE}           xpath=//*[@data-testid="imprimer_"]
 
+# --- page creation pop up prix  ---
+${product_ppv_popup}        xpath=//*[@class="font-paragraph-small"]
+${product_ppv_popupv2}       css=div.pricepopup__containerchoise:nth-child(1)
+${APPROUVE_button}   xpath=//div[@class='sob-breadcrumb__buttons']//button[@data-testid='false']
+${DRAFT_button}                 xpath=//*[@data-testid="brouillon"]
+${CHANGE__button}                 xpath=//*[@data-testid="changer"]

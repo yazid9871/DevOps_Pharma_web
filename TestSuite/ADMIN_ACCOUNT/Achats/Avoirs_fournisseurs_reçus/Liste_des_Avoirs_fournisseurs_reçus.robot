@@ -49,7 +49,7 @@ Rechercher Par Date
     Vérifier La Visibilité Des Champs De Recherche Avoirs fournisseurs reçus
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Avoirs fournisseurs reçus
-    Vérifier La Recherche     td[3]    2026-04-30    ${CHAMP_DATE_AVOIR_RECU}
+     Vérifier La Recherche par date     td[3]    2026-04-30    ${CHAMP_DATE_AVOIR_RECU}
 
 Vérifier La Recherche Par Total Accepté
     [Documentation]    Vérifie la recherche d'un Avoir fournisseur reçu par son total accepté.

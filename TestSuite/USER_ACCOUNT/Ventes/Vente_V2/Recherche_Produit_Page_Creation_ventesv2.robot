@@ -4,6 +4,7 @@ Library           SeleniumLibrary
 Library            String
 Resource          ../../../../Resources/Authentification_user.robot
 Resource          ../../../../Resources/MotsClesCommuns.robot
+Resource          ../../../../Resources/PageCreationMotsClesCommuns.robot
 Resource          ../../../../Resources/Variables.robot
 Suite Setup       Ouvrir Le Navigateur Se Connecter 2
 #Suite Teardown    Close Browser
@@ -30,8 +31,10 @@ ${valeur_de_recheche_DCI}      ACARBOSE
 Accéder à la page de création de ventesventes
      [Documentation]    Vérifie la navigation : connexion, accès à la liste des ventes,
      ...                puis ouverture de la page de création d'un nouveau ventes.
-     Accéder à la page    quotes
-     Aller à la page de création de ventes
+     Accéder à la page      invoice/create/cashier-mode?source=invoices
+      Wait Until Element Is Visible   ${INPUT_CODE_BARRE}  timeout=30s
+valide le compte user par ecurity_code
+     valide le compte user par ecurity_code      ${PASSWORD2}
 Vérifie l'état du switch "Nouvelle interface de vente"
        Vérifie l'état du switch "Nouvelle interface de vente"
 Vérifier le choix du client
@@ -82,10 +85,7 @@ Vérifier la recherche par DCI
      Vérifier les résultats de recherche par DCI
 
 *** Keywords ***
-Aller à la page de création de ventes
-    [Documentation]    Clique sur le bouton "créer" et attend l'affichage du formulaire.
-    click element    xpath=//*[@data-testid="créer"]
-     Wait Until Element Is Visible   ${INPUT_CODE_BARRE}  timeout=30s
+
 
 Vérifier que le champ de recherche produit est visible
     Wait Until Element Is Visible  ${INPUT_CODE_BARRE}

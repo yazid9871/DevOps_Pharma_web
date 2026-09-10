@@ -40,7 +40,7 @@ Rechercher Par Date
     Vérifier La Visibilité Des Champs De Recherche Préparations
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Préparations
-    Vérifier La Recherche     td[3]       2026-08-06     ${CHAMP_DATE_PREPARATION}
+    Vérifier La Recherche par date    td[3]       2026-08-06     ${CHAMP_DATE_PREPARATION}
 
 Vérifier La Recherche Par Quantité De Produit Résultant
     [Documentation]    Vérifie la recherche d'une Préparation par sa quantité de produit résultant.

@@ -10,6 +10,7 @@ Suite Setup       Ouvrir Le Navigateur Se Connecter
 Force Tags        Liste des Devis
 
 
+
 *** Test Cases ***
 Vérifier La Pagination Après Connexion
     [Documentation]    Vérifie que la pagination du tableau Devis fonctionne correctement
@@ -30,7 +31,7 @@ Vérifier Le Bouton "Créer" Devis
 
 Rechercher Par Numéro De Transaction
     [Documentation]    Vérifie que la recherche par numéro de transaction fonctionne correctement
-    Cliquer Sur Rechercher Pour Afficher Le Champ
+    #Cliquer Sur Rechercher Pour Afficher Le Champ
     Vérifier La Visibilité Des Champs De Recherche Devis
     Vérifier La Recherche     th    DEV-6      ${CHAMP_NUM_TRANSACTION_DEVIS}
 
@@ -46,7 +47,7 @@ Rechercher Par Date De Validité
     Vérifier La Visibilité Des Champs De Recherche Devis
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Devis
-    Vérifier La Recherche     td[2]       2026-07-31     ${CHAMP_VALABLE_JUSQUAU_DEVIS}
+    Vérifier La Recherche par date     td[2]    2024-05-06      ${CHAMP_VALABLE_JUSQUAU_DEVIS}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'un Devis par son montant total.

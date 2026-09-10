@@ -33,14 +33,14 @@ Rechercher Par Date
    Vérifier La Visibilité Des Champs De Recherche Sorties confrères
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Sorties confrères
-    Vérifier La Recherche     td[1]    2026-01-26   ${CHAMP_DATE_SORTIE_CONFRERE}
+     Vérifier La Recherche par date     td[1]    2026-01-26   ${CHAMP_DATE_SORTIE_CONFRERE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'une Sortie confrère par sa date de création (Créé le).
     Vérifier La Visibilité Des Champs De Recherche Sorties confrères
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Sorties confrères
-    Vérifier La Recherche     td[2]    2026-01-26    ${CHAMP_CREE_LE_SORTIE_CONFRERE}
+     Vérifier La Recherche par date      td[2]    2026-01-26    ${CHAMP_CREE_LE_SORTIE_CONFRERE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'une Sortie confrère par son montant total.

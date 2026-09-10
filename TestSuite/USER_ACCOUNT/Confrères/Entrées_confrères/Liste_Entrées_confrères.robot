@@ -33,14 +33,14 @@ Rechercher Par Date
    Vérifier La Visibilité Des Champs De Recherche Entrées confrères
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Entrées confrères
-    Vérifier La Recherche     td[1]    2025-10-22   ${CHAMP_DATE_ENTREE_CONFRERE}
+    Vérifier La Recherche par date     td[1]    2025-10-22   ${CHAMP_DATE_ENTREE_CONFRERE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'une Entrée confrère par sa date de création (Créé le).
     Vérifier La Visibilité Des Champs De Recherche Entrées confrères
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Entrées confrères
-    Vérifier La Recherche     td[2]    2025-10-22    ${CHAMP_CREE_LE_ENTREE_CONFRERE}
+     Vérifier La Recherche par date     td[2]    2025-10-22    ${CHAMP_CREE_LE_ENTREE_CONFRERE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'une Entrée confrère par son montant total.

@@ -92,7 +92,7 @@ Rechercher Par Date D'Expiration
     Vérifier La Visibilité Des Champs De Recherche Stock
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Stock
-    Vérifier La Recherche     td[8]    2026-08    ${CHAMP_DATE_EXPIRATION_STOCK}
+    Vérifier La Recherche par date     td[8]    2026-08    ${CHAMP_DATE_EXPIRATION_STOCK}
 
 Rechercher Par Code Barre
     [Documentation]    Vérifie que la recherche par code barre fonctionne correctement

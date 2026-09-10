@@ -34,7 +34,7 @@ Vérifier Le Bouton "Créer" Ventes
 
 Rechercher Par Numéro De Transaction
     [Documentation]    Vérifie que la recherche par numéro de transaction fonctionne correctement
-    Cliquer Sur Rechercher Pour Afficher Le Champ
+    #Cliquer Sur Rechercher Pour Afficher Le Champ
     Vérifier La Visibilité Des Champs De Recherche Ventes
     Vérifier La Recherche     th    FAC-8004      ${CHAMP_NUM_TRANSACTION_VENTE}
 
@@ -50,14 +50,14 @@ Rechercher Par Date De Vente
     Vérifier La Visibilité Des Champs De Recherche Ventes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Ventes
-    Vérifier La Recherche     td[2]       2026-06-09     ${CHAMP_DATE_VENTE}
+    Vérifier La Recherche par date     td[2]       2024-05-06     ${CHAMP_DATE_VENTE}
 
 Rechercher Par Date De Création
     [Documentation]    Vérifie la recherche d'une Vente par sa date de création (Créé le).
     Vérifier La Visibilité Des Champs De Recherche Ventes
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Ventes
-    Vérifier La Recherche     td[3]     2026-07-31 15:34:37     ${CHAMP_CREE_LE_VENTE}
+    Vérifier La Recherche par date     td[3]     2024-05-06    ${CHAMP_CREE_LE_VENTE}
 
 Vérifier La Recherche Par Total
     [Documentation]    Vérifie la recherche d'une Vente par son montant total.

@@ -35,7 +35,7 @@ Rechercher Par Date
    Vérifier La Visibilité Des Champs De Recherche Bordereaux d'envoi
     Cliquer Sur Actualiser
     Vérifier Que Le Champ De Recherche Est Vide Bordereaux d'envoi
-    Vérifier La Recherche     td[1]    2026-08-03   ${CHAMP_DATE_BORDEREAU_ENVOI}
+    Vérifier La Recherche par date     td[1]    2026-08-03   ${CHAMP_DATE_BORDEREAU_ENVOI}
 
 Vérifier La Recherche Par Total Client
     [Documentation]    Vérifie la recherche d'un Bordereau d'envoi par son total client.
