@@ -148,9 +148,10 @@ jobs:
     name: ${{ matrix.label }}
     needs: [build, discover]
     runs-on: ubuntu-latest
+    timeout-minutes: 75
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 4
       matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
     env:
       ROBOT_IMAGE: ${{ needs.build.outputs.image }}

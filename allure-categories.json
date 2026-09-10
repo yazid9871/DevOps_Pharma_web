@@ -1,0 +1,60 @@
+[
+  {
+    "name": "UI not interactable / scroll issue",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(ElementNotInteractableException|could not be scrolled into view|element not interactable).*",
+    "traceRegex": ".*(ElementNotInteractableException|could not be scrolled into view|element not interactable).*"
+  },
+  {
+    "name": "UI click blocked / overlay",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(ElementClickInterceptedException|Other element would receive the click|click intercepted).*",
+    "traceRegex": ".*(ElementClickInterceptedException|Other element would receive the click|click intercepted).*"
+  },
+  {
+    "name": "Element not found / locator",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element).*",
+    "traceRegex": ".*(NoSuchElementException|Element with locator .* not found|Unable to locate element).*"
+  },
+  {
+    "name": "Timeout / page not ready",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met).*",
+    "traceRegex": ".*(TimeoutException|Timed out|Wait Until.*failed|condition was not met).*"
+  },
+  {
+    "name": "Stale element / DOM changed",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(StaleElementReferenceException|stale element reference).*",
+    "traceRegex": ".*(StaleElementReferenceException|stale element reference).*"
+  },
+  {
+    "name": "Assertion / expected result mismatch",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected).*",
+    "traceRegex": ".*(AssertionError|should have been|should be|does not contain|did not match|!=|Expected).*"
+  },
+  {
+    "name": "Robot keyword missing / syntax",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(No keyword with name .* found|Keyword .* expected .* arguments|Several failures occurred|Variable .* not found).*",
+    "traceRegex": ".*(No keyword with name .* found|Keyword .* expected .* arguments|Several failures occurred|Variable .* not found).*"
+  },
+  {
+    "name": "Authentication / session",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(login|auth|unauthorized|forbidden|session expired|401|403).*",
+    "traceRegex": ".*(login|auth|unauthorized|forbidden|session expired|401|403).*"
+  },
+  {
+    "name": "Browser / driver crash",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*(WebDriverException|SessionNotCreatedException|invalid session id|Failed to decode response from marionette|Reached error page).*",
+    "traceRegex": ".*(WebDriverException|SessionNotCreatedException|invalid session id|Failed to decode response from marionette|Reached error page).*"
+  },
+  {
+    "name": "Other product defects",
+    "matchedStatuses": ["failed", "broken"]
+  }
+]
