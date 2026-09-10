@@ -1,16 +1,22 @@
 name: Robot Pharma Tests
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      account:
+        description: "Compte à tester"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - admin
+          - user
+          - freemium
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/pharma-robot
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   DOCKER_BUILD_RECORD_UPLOAD: false
   DOCKER_BUILD_SUMMARY: false
 
@@ -26,9 +32,9 @@ jobs:
     outputs:
       image: ${{ steps.meta.outputs.image }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -37,7 +43,7 @@ jobs:
         run: |
           image="${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}"
           echo "image=${image,,}" >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           push: true
@@ -45,53 +51,112 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  discover:
+    name: Discover test folders
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: discover
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          selected="${{ github.event_name == 'workflow_dispatch' && inputs.account || 'all' }}"
+          matrix_file="$(mktemp)"
+
+          python - "$selected" > "$matrix_file" <<'PY'
+          import json
+          import re
+          import sys
+          from pathlib import Path
+
+          selected = sys.argv[1]
+          accounts = {
+              "admin": "ADMIN_ACCOUNT",
+              "user": "USER_ACCOUNT",
+              "freemium": "FREEMIUM_ACCOUNT",
+          }
+
+          def slug(value):
+              value = value.lower()
+              value = re.sub(r"[^a-z0-9]+", "-", value)
+              return value.strip("-") or "tests"
+
+          def module_path(account, module):
+              return f"/tests/TestSuite/{account}/{module}"
+
+          def add_group(role, account, label, modules):
+              existing_modules = [
+                  module
+                  for module in modules
+                  if (Path("TestSuite") / account / module).is_dir()
+              ]
+              if not existing_modules:
+                  return
+
+              group_slug = slug(label)
+              include.append({
+                  "role": role,
+                  "account": account,
+                  "modules": "|".join(existing_modules),
+                  "module_paths": "|".join(module_path(account, module) for module in existing_modules),
+                  "result_path": f"results/{role}/{group_slug}",
+                  "artifact": f"robot-{role}-{group_slug}-reports",
+                  "label": f"{role.upper()} - {label}",
+              })
+
+          include = []
+          for role, account in accounts.items():
+              if selected not in ("all", role):
+                  continue
+
+              account_dir = Path("TestSuite") / account
+              if not account_dir.is_dir():
+                  continue
+
+              module_names = sorted(p.name for p in account_dir.iterdir() if p.is_dir())
+              core_groups = {
+                  "Rapports": ["Rapports"],
+                  "Ventes": ["Ventes"],
+                  "Achats": ["Achats"],
+                  "Confreres et Stock": ["Confrères", "Confreres", "Stock"],
+              }
+              grouped_modules = {
+                  module
+                  for modules in core_groups.values()
+                  for module in modules
+              }
+
+              for label, modules in core_groups.items():
+                  add_group(role, account, label, modules)
+
+              light_modules = [
+                  module
+                  for module in module_names
+                  if module not in grouped_modules
+              ]
+              add_group(role, account, "Modules legers", light_modules)
+
+          print(json.dumps({"include": include}, ensure_ascii=False))
+          PY
+
+          echo "matrix=$(cat "$matrix_file")" >> "$GITHUB_OUTPUT"
+
   test:
     name: ${{ matrix.label }}
-    needs: build
+    needs: [build, discover]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 10
-      matrix:
-        include:
-          - group: admin-heavy-reports
-            role: admin
-            label: ADMIN - Rapports (320 tests)
-          - group: admin-heavy-sales
-            role: admin
-            label: ADMIN - Ventes (416 tests)
-          - group: admin-heavy-purchases
-            role: admin
-            label: ADMIN - Achats (685 tests)
-          - group: admin-medium
-            role: admin
-            label: ADMIN - Confreres et Stock (229 tests)
-          - group: admin-light
-            role: admin
-            label: ADMIN - Modules legers (368 tests)
-          - group: user-heavy-reports
-            role: user
-            label: USER - Rapports (320 tests)
-          - group: user-heavy-sales
-            role: user
-            label: USER - Ventes (363 tests)
-          - group: user-heavy-purchases
-            role: user
-            label: USER - Achats (676 tests)
-          - group: user-medium
-            role: user
-            label: USER - Confreres et Stock (227 tests)
-          - group: user-light
-            role: user
-            label: USER - Modules legers (367 tests)
-          - group: freemium
-            role: freemium
-            label: FREEMIUM - Modules (312 tests)
+      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
     env:
       ROBOT_IMAGE: ${{ needs.build.outputs.image }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@v7
+      - uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -101,14 +166,23 @@ jobs:
       - name: Run Robot tests (non-blocking)
         run: |
           set +e
-          docker compose --profile "${{ matrix.group }}" up --no-color
+          mkdir -p "${{ matrix.result_path }}"
+          IFS='|' read -ra MODULE_PATHS <<< "${{ matrix.module_paths }}"
+          for MODULE_PATH in "${MODULE_PATHS[@]}"; do
+            docker run --rm \
+              --shm-size=2g \
+              --memory=2g \
+              -e MODULE_PATH="$MODULE_PATH" \
+              -v "$PWD/${{ matrix.result_path }}:/tests/results" \
+              "$ROBOT_IMAGE"
+          done
           exit 0
       - name: Upload Robot reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: robot-${{ matrix.group }}-reports
-          path: results/${{ matrix.role }}/
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.result_path }}/
           if-no-files-found: warn
           retention-days: 14
 
@@ -118,14 +192,14 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Download Robot artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: robot-*-reports
           path: downloaded-artifacts
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - name: Install Allure CLI
@@ -157,7 +231,7 @@ jobs:
           fi
       - name: Upload merged Allure report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: allure-report
           path: allure-single/index.html
@@ -165,7 +239,7 @@ jobs:
           retention-days: 30
       - name: Delete temporary Robot artifacts
         if: always()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const {owner, repo} = context.repo;
