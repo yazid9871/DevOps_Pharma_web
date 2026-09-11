@@ -15,7 +15,7 @@ if [ "$account_name" = "FREEMIUM_ACCOUNT" ]; then
 fi
 
 set +e
-xvfb-run -a --server-args="-screen 0 1920x1080x24" \
+xvfb-run -a --server-args="-screen 0 1920x3000x24" \
   robot \
   --listener allure_robotframework:/tests/results/allure-results \
   --listener /close_browsers_listener.py \
