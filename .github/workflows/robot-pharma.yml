@@ -220,7 +220,7 @@ jobs:
           for allure_dir in "${ALLURE_DIRS[@]}"; do
             find "$allure_dir" -maxdepth 1 -type f ! -name categories.json -exec cp {} merged-allure-results/ \;
           done
-          cp allure-categories.json merged-allure-results/categories.json
+          cp ci/allure-categories.json merged-allure-results/categories.json
           allure generate merged-allure-results --output allure-report --clean
       - name: Create single-file Allure report
         if: always()

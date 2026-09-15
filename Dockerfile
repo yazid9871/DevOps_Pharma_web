@@ -27,11 +27,11 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 WORKDIR /tests
 COPY Resources /tests/Resources
 COPY TestSuite /tests/TestSuite
-COPY run_robot.sh /run_robot.sh
-COPY normalize_allure.py /normalize_allure.py
-COPY allure-categories.json /allure-categories.json
-COPY close_browsers_listener.py /close_browsers_listener.py
-COPY selenium_stability_listener.py /selenium_stability_listener.py
+COPY ci/run_robot.sh /run_robot.sh
+COPY ci/normalize_allure.py /normalize_allure.py
+COPY ci/allure-categories.json /allure-categories.json
+COPY ci/close_browsers_listener.py /close_browsers_listener.py
+COPY ci/selenium_stability_listener.py /selenium_stability_listener.py
 RUN chmod +x /run_robot.sh && mkdir -p /tests/results
 
 ENTRYPOINT ["/run_robot.sh"]
