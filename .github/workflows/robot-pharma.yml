@@ -167,15 +167,74 @@ jobs:
         run: |
           set +e
           mkdir -p "${{ matrix.result_path }}"
-          IFS='|' read -ra MODULE_PATHS <<< "${{ matrix.module_paths }}"
-          for MODULE_PATH in "${MODULE_PATHS[@]}"; do
+
+          run_robot_container() {
+            local module_path="$1"
+            local result_dir="$2"
+            local memory="$3"
+            local shm_size="$4"
+            local cpus="${5:-}"
+            local cpu_args=()
+
+            if [ -n "$cpus" ]; then
+              cpu_args=(--cpus="$cpus")
+            fi
+
+            mkdir -p "$result_dir"
             docker run --rm \
-              --shm-size=3g \
-              --memory=6g \
-              -e MODULE_PATH="$MODULE_PATH" \
-              -v "$PWD/${{ matrix.result_path }}:/tests/results" \
+              --shm-size="$shm_size" \
+              --memory="$memory" \
+              "${cpu_args[@]}" \
+              -e MODULE_PATH="$module_path" \
+              -v "$PWD/$result_dir:/tests/results" \
               "$ROBOT_IMAGE"
-          done
+          }
+
+          if [ "${{ matrix.modules }}" = "Achats" ] && [ "${{ matrix.account }}" != "FREEMIUM_ACCOUNT" ]; then
+            ACHATS_PATH="${{ matrix.module_paths }}"
+            run_robot_container \
+              "$ACHATS_PATH/Sobrus_Marketplace" \
+              "${{ matrix.result_path }}/marketplace" \
+              "3g" \
+              "1g" \
+              "1" &
+            marketplace_pid=$!
+
+            OTHER_ACHATS_PATHS=()
+            for module in \
+              "Avoirs_fournisseurs_reçus" \
+              "Avoirs_fournisseurs_émis" \
+              "Bons_de_commandes" \
+              "Bons_de_livraison" \
+              "Dépenses" \
+              "Espace_labo" \
+              "Propositions_de_commande"; do
+              if [ -d "TestSuite/${{ matrix.account }}/Achats/$module" ]; then
+                OTHER_ACHATS_PATHS+=("$ACHATS_PATH/$module")
+              fi
+            done
+            OTHER_ACHATS_MODULE_PATH="$(IFS='|'; echo "${OTHER_ACHATS_PATHS[*]}")"
+
+            run_robot_container \
+              "$OTHER_ACHATS_MODULE_PATH" \
+              "${{ matrix.result_path }}/autres-achats" \
+              "3g" \
+              "1g" \
+              "1" &
+            autres_achats_pid=$!
+
+            wait "$marketplace_pid"
+            wait "$autres_achats_pid"
+          else
+            IFS='|' read -ra MODULE_PATHS <<< "${{ matrix.module_paths }}"
+            for MODULE_PATH in "${MODULE_PATHS[@]}"; do
+              run_robot_container \
+                "$MODULE_PATH" \
+                "${{ matrix.result_path }}" \
+                "6g" \
+                "3g"
+            done
+          fi
           exit 0
       - name: Upload Robot reports
         if: always()
