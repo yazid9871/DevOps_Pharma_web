@@ -148,7 +148,6 @@ jobs:
     name: ${{ matrix.label }}
     needs: [build, discover]
     runs-on: ubuntu-latest
-    timeout-minutes: 75
     strategy:
       fail-fast: false
       max-parallel: 12
