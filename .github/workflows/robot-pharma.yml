@@ -228,9 +228,13 @@ jobs:
           else
             IFS='|' read -ra MODULE_PATHS <<< "${{ matrix.module_paths }}"
             for MODULE_PATH in "${MODULE_PATHS[@]}"; do
+              MODULE_NAME="${MODULE_PATH##*/}"
+              MODULE_SLUG="$(echo "$MODULE_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^[:alnum:]]+/-/g; s/^-+|-+$//g')"
+              MODULE_RESULT_PATH="${{ matrix.result_path }}/${MODULE_SLUG:-module}"
+
               run_robot_container \
                 "$MODULE_PATH" \
-                "${{ matrix.result_path }}" \
+                "$MODULE_RESULT_PATH" \
                 "6g" \
                 "3g"
             done

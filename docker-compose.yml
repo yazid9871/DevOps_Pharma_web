@@ -10,7 +10,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["admin-heavy-reports"]
+    profiles: ["admin", "all", "admin-heavy-reports"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Rapports
     volumes:
@@ -20,7 +20,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["admin-heavy-sales"]
+    profiles: ["admin", "all", "admin-heavy-sales"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Ventes
     volumes:
@@ -30,7 +30,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["admin-heavy-purchases"]
+    profiles: ["admin", "all", "admin-heavy-purchases"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Achats
     volumes:
@@ -38,7 +38,7 @@ services:
 
   admin-confreres:
     <<: *robot-defaults
-    profiles: ["admin-medium"]
+    profiles: ["admin", "all", "admin-medium"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Confrères
     volumes:
@@ -46,7 +46,7 @@ services:
 
   admin-stock:
     <<: *robot-defaults
-    profiles: ["admin-medium"]
+    profiles: ["admin", "all", "admin-medium"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Stock
     volumes:
@@ -54,7 +54,7 @@ services:
 
   admin-clients:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Clients
     volumes:
@@ -62,15 +62,23 @@ services:
 
   admin-fournisseurs:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Fournisseurs
     volumes:
       - ./results/admin/fournisseurs:/tests/results
 
+  admin-home:
+    <<: *robot-defaults
+    profiles: ["admin", "all", "admin-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Home
+    volumes:
+      - ./results/admin/home:/tests/results
+
   admin-produits:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Produits
     volumes:
@@ -78,7 +86,7 @@ services:
 
   admin-organismes:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Organismes
     volumes:
@@ -86,7 +94,7 @@ services:
 
   admin-parametres:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Paramètres
     volumes:
@@ -94,7 +102,7 @@ services:
 
   admin-marketing:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Marketing
     volumes:
@@ -102,7 +110,7 @@ services:
 
   admin-assistant-marketplace:
     <<: *robot-defaults
-    profiles: ["admin-light"]
+    profiles: ["admin", "all", "admin-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/ADMIN_ACCOUNT/Assistant_Marketplace
     volumes:
@@ -112,7 +120,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["user-heavy-reports"]
+    profiles: ["user", "all", "user-heavy-reports"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Rapports
     volumes:
@@ -122,7 +130,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["user-heavy-sales"]
+    profiles: ["user", "all", "user-heavy-sales"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Ventes
     volumes:
@@ -132,7 +140,7 @@ services:
     <<: *robot-defaults
     shm_size: "2gb"
     mem_limit: "2g"
-    profiles: ["user-heavy-purchases"]
+    profiles: ["user", "all", "user-heavy-purchases"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Achats
     volumes:
@@ -140,7 +148,7 @@ services:
 
   user-confreres:
     <<: *robot-defaults
-    profiles: ["user-medium"]
+    profiles: ["user", "all", "user-medium"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Confrères
     volumes:
@@ -148,7 +156,7 @@ services:
 
   user-stock:
     <<: *robot-defaults
-    profiles: ["user-medium"]
+    profiles: ["user", "all", "user-medium"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Stock
     volumes:
@@ -156,7 +164,7 @@ services:
 
   user-clients:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Clients
     volumes:
@@ -164,15 +172,23 @@ services:
 
   user-fournisseurs:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Fournisseurs
     volumes:
       - ./results/user/fournisseurs:/tests/results
 
+  user-home:
+    <<: *robot-defaults
+    profiles: ["user", "all", "user-light"]
+    environment:
+      MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Home
+    volumes:
+      - ./results/user/home:/tests/results
+
   user-produits:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Produits
     volumes:
@@ -180,7 +196,7 @@ services:
 
   user-organismes:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Organismes
     volumes:
@@ -188,7 +204,7 @@ services:
 
   user-parametres:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Paramètres
     volumes:
@@ -196,7 +212,7 @@ services:
 
   user-marketing:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Marketing
     volumes:
@@ -204,7 +220,7 @@ services:
 
   user-assistant-marketplace:
     <<: *robot-defaults
-    profiles: ["user-light"]
+    profiles: ["user", "all", "user-light"]
     environment:
       MODULE_PATH: /tests/TestSuite/USER_ACCOUNT/Assistant_Marketplace
     volumes:
@@ -212,7 +228,7 @@ services:
 
   freemium:
     <<: *robot-defaults
-    profiles: ["freemium"]
+    profiles: ["freemium", "all"]
     environment:
       MODULE_PATH: /tests/TestSuite/FREEMIUM_ACCOUNT
     volumes:
